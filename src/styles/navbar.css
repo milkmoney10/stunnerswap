@@ -1,0 +1,81 @@
+.navbar {
+    background-color: #3b3c3d;
+    height: 7vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px;
+} 
+
+/* fonts: 
+font-family: "Anton", sans-serif;
+or
+font-family: 'Bebas Neue'; */
+
+/* TITLE */
+
+.title {
+    width: 33.3%;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+}
+ 
+.title > p {
+    color: white;
+}
+
+.title > img {
+    width: 85px;
+    height: 65px;
+}
+
+/* NAVIGATION LINKS */
+
+.navigation-links {
+    
+    width: 33.3%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    padding: 0 1rem;
+}
+
+.navigation-links ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    display: flex;
+    gap: 1rem;
+}
+
+.navigation-links a {
+    color: white;
+    text-decoration: none;
+}
+
+.navigation-links li.active {
+    background-color: #555;
+}
+
+.navigation-links li:hover {
+    background-color: #777;
+
+}
+
+
+
+/* METAMASK WALLET */
+
+.wallet {
+    width: 33.3%;
+    display: flex;
+    justify-content: right;
+    align-items: center;
+
+}
+
+.wallet > p {
+    color: white;
+}

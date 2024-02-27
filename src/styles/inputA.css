@@ -1,0 +1,182 @@
+.container { 
+    width: 100%;
+}
+
+.inputA-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: white;
+
+    height: 80px;
+    border-radius: 10px;
+    width: 100%;
+   
+}
+ 
+
+
+.inputA-container > button {
+    height: 70%;
+    width: 30%;
+    margin-right: 10px;
+    margin-left: 10px;
+    padding: 0;
+    background-color: white;
+    border: none;
+    border-radius: 5px;
+
+}
+
+.inputA-container > button:hover {
+    transition: background-color 0.3s ease;
+    background-color: #cbced1;
+}
+
+
+
+.input-wrapper {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex: 1;
+    margin-right: 10px;
+    height: 100%;
+    position: relative;
+
+
+
+}
+
+.input-wrapper > input {
+    /* width: 100%; */
+    width: 60%;
+    height: 60%;
+    font-size: 25px;
+    outline: none; 
+    border: none;
+}
+
+.user-balance {
+    cursor: pointer;
+    font-size: 12px;
+    width: 100%;
+   
+    text-align: right;
+}
+
+.balance-input {
+    padding-right: 70px;
+}
+
+.balance-text {
+    position: absolute;
+    right: 10px; 
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none; 
+    color: #999; 
+}
+
+
+
+.switch-inputs {
+    height: 30px; 
+    display: flex;
+    align-items: center;  
+    justify-content: center;
+}
+
+.switch-btn {
+    position: relative;
+    z-index: 10;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #3b3c3d;
+    border: 2px solid white; 
+    cursor: pointer; 
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    width: 40px;
+}
+
+.switch-btn:hover {
+    transition: box-shadow 0.05s ease;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.99);
+    transition: height 0.05s ease;
+    transition: width 0.05s ease;
+    height: 44px;
+    width: 44px;
+}
+
+.custom-buttonA{
+    display: flex;
+    align-items: center; 
+    justify-content: space-between;
+    padding-right: 10px !important;
+    padding-left: 10px !important;
+}
+
+.custom-buttonA > p {
+
+    font-size: 25px;
+    color: white; 
+
+    -webkit-text-stroke: 2px black; 
+}
+
+.selected-token {
+    display: flex;
+    justify-content: center;
+    height: 70%;
+    width: 30%;
+    
+}
+
+
+
+.token-icon-usdt {
+
+    width: 80%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    
+
+}
+
+.token-icon-usdt > p {
+    font-size: 20px;
+    font-family: "Anton", sans-serif;
+   
+    margin: 0;
+    
+}
+
+.token-icon-usdt > img {
+    height: 25px;
+    width: 25px;
+}
+ 
+.token-icon-usdc {
+    width: 80%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.token-icon-usdc > p {
+    font-size: 20px;
+    font-family: "Anton", sans-serif;
+    margin: 0;
+}
+
+.token-icon-usdc > img {
+    height: 25px;
+    width: 25px;
+}
+
+ 

@@ -1,0 +1,19 @@
+.swap-approval-container {
+    width: 100%;
+    display: flex;
+    margin-top: 15px;
+}
+
+.swap-approval-container > button {
+    color: #4A90E2;
+    border-radius: 15px;
+    height: 60px;
+    font-size: 40px;
+    font-family: 'Bebas Neue';
+    letter-spacing: 1px;
+    width: 100%;
+    position: relative;
+    padding: 10px 20px;  
+    border: none;
+    cursor: pointer;
+}

@@ -1,0 +1,71 @@
+.popupA {
+    background-color: azure;
+    z-index: 11;
+    position: absolute;
+    height: 150%;
+    width: 90%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 10%; 
+}
+
+.token-list {
+    width: 100%;
+} 
+
+.token-list > p {
+    display: flex;
+    justify-content: center;
+    height: 50px;
+    align-items: center;
+}
+
+.token { 
+    width: 100%;
+    background-color: none;
+    display: flex;
+    height: 70px;
+}
+
+.token:hover {
+    background-color: rgba(200, 255, 255, 1);
+}
+
+.image-container > img {
+    width: 50%;
+    height: 75%;
+    display: flex;
+    justify-content: flex-start;
+    align-self: center;
+
+
+}
+
+.image-container {
+    width: 20%;
+    display: flex;
+    justify-content: center;
+}
+
+.name-container {
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-self: flex-start;
+    height: 100%;
+}
+
+.name-container > p {
+    margin: 0;
+    padding: 0;
+    display: flex;
+
+}
+
+.name-container > p:first-child {
+    margin-bottom: 4px;
+
+}
+

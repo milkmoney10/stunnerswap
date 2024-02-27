@@ -1,0 +1,76 @@
+.inputB-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: white;
+    height: 80px;
+    border-radius: 10px;
+}
+
+.inputB-container > button {
+    height: 70%;
+    width: 30%;
+    margin-right: 10px;
+    margin-left: 10px;
+    padding: 0;
+    background-color: white;
+    border: none;
+    border-radius: 5px;
+
+}
+
+.inputB-container > button:hover {
+    transition: background-color 0.3s ease;
+    background-color: #cbced1;
+}
+
+.input-wrapper {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex: 1;
+    margin-right: 10px;
+    height: 100%;
+    position: relative;
+}
+
+.input-wrapper > input {
+    /* width: 100%; */
+    height: 60%;
+    font-size: 25px;
+}
+
+.user-balance {
+    cursor: pointer;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.balance-input {
+    padding-right: 70px;
+}
+
+.balance-text {
+    position: absolute;
+    right: 10px; 
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none; 
+    color: #999; 
+}
+
+
+.custom-buttonB{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-right: 10px !important;
+    padding-left: 10px !important;
+} 
+
+.custom-buttonB > p {
+    font-size: 25px;
+    color: white; 
+    -webkit-text-stroke: 2px black; 
+}
+ 

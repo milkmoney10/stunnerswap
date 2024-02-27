@@ -1,0 +1,136 @@
+.add-liquidity {
+   
+    position: fixed;
+    top: 50%;
+    /* change left back to 50% when done */
+    left: 50%;
+    transform: translate(-50%, -50%); 
+    background-color: #3b3c3d;
+    padding: 30px;
+    opacity: 1;
+    border-radius: 55px;
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.selected-token-a, .selected-token-b {
+    display: flex;
+    align-items: center;
+    background: white;
+    border-radius: 10px;
+    margin: 15px;
+    height: 80px;
+    width: 100%;
+}
+
+
+
+.selected-token-a {
+    margin-bottom: 30px;
+}
+
+.selected-token-a > div > button, .selected-token-b > div > button {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    margin: 10px;
+    height: 50px; /*neeed to fix this, also need width */
+    padding: 0;
+    /* padding-right: 10px;
+    padding-left: 10px; */
+    background-color: white;
+    border: none;
+    border-radius: 5px;
+    width: 100%;
+}
+
+.btn-div {
+    /* width: 30%;
+    padding: 10px; */
+    border-radius: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    width: 30%;
+    display: flex;
+    align-items: center;
+    
+}
+
+.btn-div:hover {
+    transition: background-color 0.3s ease;
+    background-color: #cbced1;
+}
+
+.btn-div:hover > * {
+    transition: background-color 0.3s ease;
+    background-color: #cbced1;
+}
+
+/* .selected-token-a > div > button:hover, .selected-token-b > div > button:hover {
+    transition: background-color 0.3s ease;
+    background-color: #cbced1;
+} */
+
+.selected-token-a > div > button > img, .selected-token-b > div > button > img {
+    height: 25px;
+    width: 25px;
+}
+
+.selected-token-a > div > button > p, .selected-token-b > div > button > p {
+    font-size: 25px;
+    color: white;
+    -webkit-text-stroke: 2px black;
+    text-align: center;
+}
+
+.selected-token-a > div > button > span, .selected-token-b > div > button > span {
+ 
+}
+
+.selected-token-a-input, .selected-token-b-input {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex: 1;
+    margin-right: 10px;
+    height: 100%;
+    position: relative;
+    
+   
+}
+
+.selected-token-a-input > input, .selected-token-b-input > input {
+    outline: none;
+    border: none;
+    font-size: 25px;
+}
+
+.selected-token-a-input > p, .selected-token-b-input > p {
+    color: black;
+    font-size: 12px;
+}
+
+.add-liquidity-approval-buttons{
+    width: 100%;
+    display: flex;
+    margin-top: 15px;
+}
+
+.add-liquidity-approval-buttons > button {
+    color: #4A90E2;
+    border-radius: 15px;
+    height: 60px;
+    font-size: 40px;
+    font-family: 'Bebas Neue';
+    letter-spacing: 1px;
+    width: 100%;
+    position: relative;
+    padding: 10px 20px; 
+    border: none;
+    cursor: pointer;
+    margin-right: 5px;
+    margin-left: 5px;
+}
