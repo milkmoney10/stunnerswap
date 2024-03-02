@@ -121,7 +121,7 @@ function App() {
         } catch(error) {
             console.log('error fetching usd balance')
         }  
-    } 
+    }  
     getBalances()
   }
  }, [signer, usdc_contract])
@@ -156,7 +156,7 @@ function App() {
   return (
     <section className="main-section">
 
-      {/* <div style={{position: 'absolute', height: '100vh'}}>
+      <div style={{position: 'absolute', height: '100vh'}}>
         {whatVisible && (
        
           <p style={{
@@ -170,7 +170,7 @@ function App() {
           }}>WHAT?</p> 
         
         )}
-      </div> */}
+      </div>
     
       <Navbar 
       setShowLiquidityPage={setShowLiquidityPage}

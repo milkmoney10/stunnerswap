@@ -1,8 +1,8 @@
 .main-section {
-    /* background-image: url('../images/milk.gif');
+    background-image: url('../images/milk.gif');
     background-size: cover; 
-    background-position: center; */
-    background-color: lightBlue;
+    background-position: center;
+    /* background-color: lightBlue; */
     height: 100vh;
     margin: 0;
     padding: 0; 
