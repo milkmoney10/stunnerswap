@@ -1,0 +1,31 @@
+.metamask {
+
+
+}
+
+
+.disconnect, .connect {
+    background-color: #4d4d4d; /* Dark grey background */
+  color: #fff; /* White text */
+  border: none; /* No border */ 
+  padding: 10px 20px; /* Padding for button */
+  font-size: 16px; /* Font size */
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer; /* Cursor style */
+  text-transform: uppercase; /* Uppercase text */
+  /* box-shadow: 0px 4px 8px rgba(92, 169, 213, 0.7);  */
+  font-family: "Anton", sans-serif;
+}
+
+.disconnect:hover, .connect:hover {
+    background-color: #666; /* Darker grey on hover */
+    box-shadow: 0px 4px 8px rgba(92, 169, 213, 0.7); /* Drop shadow */
+    transition: box-shadow 0.05s ease;
+    transition: background-color 0.05s ease;
+  }
+  
+.disconnect:active, .connect:active {
+    transform: translateY(2px); /* Pressed effect */
+  } 
+
+  /* text-shadow: 0px 10px 5px rgba(92, 169, 213, 0.7);  */ 

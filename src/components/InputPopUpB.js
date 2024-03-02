@@ -8,7 +8,7 @@ function App({
 setIsVisibleA, isVisibleA, setIsTokenSelectedB, setSelectedTokenB, 
 setInputBContract, usdt_contract, usdc_contract, availableTokens, setAvailableTokens, 
 setUpdatedAvailableTokens, updatedAvailableTokens, userBalanceB, setUserBalanceB, usdt_balance, 
-usdc_balance}) {
+usdc_balance, signer}) {
 
     const inputPopUpRefB = useRef(null);
     const tokenRefs = {};
@@ -45,10 +45,10 @@ usdc_balance}) {
                 // setAvailableTokens(updatedAvailableTokens)
             } 
             if (tokenRefs['usdc'] && tokenRefs['usdc'].contains(event.target)){
-                //if event.target is usdc, then set selected token, 
+                //if event.target is usdc, then set selected token,  
                 //set invisible, hide token list, etc
                 setIsTokenSelectedB(true)
-                setIsVisibleB(false)
+                setIsVisibleB(false) 
                 setShowNewScreenB(false)
                 setSelectedTokenB('usdc')
                 setInputBContract(usdc_contract)

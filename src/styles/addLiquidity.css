@@ -7,10 +7,10 @@
     transform: translate(-50%, -50%); 
     background-color: #3b3c3d;
     padding: 30px;
-    opacity: 1;
+    opacity: 0.92;
     border-radius: 55px;
     width: 70%;
-    display: flex;
+    display: flex; 
     flex-direction: column;
     align-items: center;
     justify-content: center;

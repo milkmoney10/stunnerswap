@@ -2,12 +2,12 @@
     background-color: azure;
     z-index: 11;
     position: absolute;
-    height: 150%;
+    height: 155%;
     width: 90%;
-    top: 50%;
+    top: 50%; 
     left: 50%;
     transform: translate(-50%, -50%);
-    border-radius: 10%; 
+    border-radius: 50px;  
 }
 
 .token-list {

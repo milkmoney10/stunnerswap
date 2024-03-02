@@ -1,6 +1,6 @@
 .navbar {
     background-color: #3b3c3d;
-    height: 7vh;
+    height: 75px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -10,7 +10,7 @@
 /* fonts: 
 font-family: "Anton", sans-serif;
 or
-font-family: 'Bebas Neue'; */
+font-family: 'Bebas Neue'; */ 
 
 /* TITLE */
 
@@ -42,6 +42,10 @@ font-family: 'Bebas Neue'; */
     padding: 0 1rem;
 }
 
+.navigation-links a {
+    font-family: "Anton", sans-serif;
+}
+
 .navigation-links ul {
     padding: 0;
     margin: 0;
@@ -50,18 +54,19 @@ font-family: 'Bebas Neue'; */
     gap: 1rem;
 }
 
-.navigation-links a {
-    color: white;
+.navigation-links a { 
+    color: white; 
     text-decoration: none;
 }
-
+ 
 .navigation-links li.active {
-    background-color: #555;
+    /* background-color: #555; */
 }
 
 .navigation-links li:hover {
-    background-color: #777;
-
+    text-shadow: 0px 10px 5px rgba(92, 169, 213, 0.7); 
+    /* opacity: 0.5; */
+    cursor: pointer;
 }
 
 

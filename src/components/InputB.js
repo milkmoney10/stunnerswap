@@ -35,7 +35,7 @@ set_usdt_balance, set_usdc_balance, userBalanceB, setUserBalanceB}){
             setInputBLiq(event.target.value)
             setInputValueB(event.target.value)
             
-            setInputValueA(event.target.value)
+            setInputValueA(event.target.value) 
         
             if (buttonRefB.current.name == 'usdt') {
                 setInputBLiq(event.target.value)

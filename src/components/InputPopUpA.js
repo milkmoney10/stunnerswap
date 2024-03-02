@@ -14,7 +14,7 @@ setUserBalanceA, usdt_balance, usdc_balance, setTest, setTest2}) {
     const inputPopUpRefA = useRef(null);    
     const tokenRefs = {};
 
-    useEffect(() => {
+    useEffect(() => { 
         function handleClick(event){
             // closes pop up if click is outside of buttonRefA and inputPopUpA
             if (!inputPopUpRefA.current.contains(event.target) &&
@@ -25,21 +25,13 @@ setUserBalanceA, usdt_balance, usdc_balance, setTest, setTest2}) {
             }
            
             if (tokenRefs['usdt'] && tokenRefs['usdt'].contains(event.target)) {
-                //if event.target is usdt, then set selected token, 
-                //set invisible, hide token list, etc
                 setIsTokenSelectedA(true)
                 setIsVisibleA(false)
                 setShowNewScreenA(false)
                 setSelectedTokenA('usdt')
-                
                 setInputAContract(usdt_contract)
-               
+                console.log(usdt_balance)
                 setUserBalanceA(usdt_balance)
-                //updates which tokens are displayed in the inputA popup
-                // const newTokensList = availableTokens.filter(token => token !== 'usdt')
-                // setUpdatedAvailableTokens(newTokensList)
-
-                // setAvailableTokens(updatedAvailableTokens)
             } 
             if (tokenRefs['usdc'] && tokenRefs['usdc'].contains(event.target)){
 
@@ -51,11 +43,6 @@ setUserBalanceA, usdt_balance, usdc_balance, setTest, setTest2}) {
                 setSelectedTokenA('usdc') 
                 setInputAContract(usdc_contract)
                 setUserBalanceA(usdc_balance)
-
-                //updates which tokens are displayed in the inputA popup
-                // const newTokensList = availableTokens.filter(token=> token !== 'usdc')
-                // setUpdatedAvailableTokens(newTokensList)
-                // setAvailableTokens(updatedAvailableTokens)
             }
 
         }

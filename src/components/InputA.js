@@ -7,7 +7,7 @@ import usdcImage from '../images/usdc.png'
 
 function App({setInputALiq, buttonRefA, isVisibleA, setIsVisibleA, setShowNewScreenA, 
 showNewScreenA, isSelectedTokenA, setSelectedTokenA, selectedTokenA,setInputAContract, 
-usdt_contract, usdc_contract, setApprovalAmount, approvalAmount, amm, wallet,
+usdt_contract, usdc_contract, setApprovalAmount, approvalAmount, amm,
 currentAllowance, setApprovedA, usdc_balance, usdt_balance, inputValueA,
 setInputValueA, inputValueB, inputBLiq, inputALiq, setSelectedTokenB, 
 set_usdt_balance, set_usdc_balance, userBalanceA, setUserBalanceA, setUserBalanceB, 
@@ -16,7 +16,7 @@ userBalanceB, setInputValueB}){
     const [displayBalance, setDisplayBalance] = useState(0)
 
     useEffect(() => {
-    }, [setSelectedTokenA, setInputValueB, setInputValueA, inputValueB, 
+    }, [setSelectedTokenA, setInputValueB, setInputValueA, inputValueB,  
     set_usdt_balance, set_usdc_balance, setDisplayBalance, displayBalance, userBalanceA, 
 inputValueA, inputValueB])
     
@@ -121,7 +121,7 @@ inputValueA, inputValueB])
             </div>
         </div> 
     )
-} 
+}  
 
 export default App;
 

@@ -8,7 +8,7 @@ const BigNumber = require('bignumber.js');
 
 
 function App({reserve0, setReserve0, reserve1, setReserve1, amm, usdcBalance, usdtBalance,
-    liquidityPoolBalance, usdcLiq, usdtLiq, wallet, inputALiq, 
+    liquidityPoolBalance, usdcLiq, usdtLiq, signer, inputALiq, 
     buttonRefA, usdc_contract, usdt_contract, buttonRefB, setInputBLiq, inputBLiq,
 isSelectedTokenA, selectedTokenA, usdc_balance, usdt_balance}) {
 
@@ -24,9 +24,13 @@ isSelectedTokenA, selectedTokenA, usdc_balance, usdt_balance}) {
 
     const [usdcValue, setUsdcValue] = useState(null)
 
-     
-    useEffect(() => { 
-        console.log(usdc_balance)
+    const [usdtApproval, setUsdtApproval] = useState(0)
+    const [usdcApproval, setUsdcApproval] = useState(0)
+
+    const [allowanceA, setAllowanceA] = useState(0)
+    const [allowanceB, setAllowanceB] = useState(0)
+
+    useEffect(() => {  
         const getReserves = async () => {
             const reserve_00 = new BigNumber(await amm.reserve0()).toFixed()
             const reserve_11 = new BigNumber(await amm.reserve1()).toFixed()
@@ -35,18 +39,16 @@ isSelectedTokenA, selectedTokenA, usdc_balance, usdt_balance}) {
         }
         getReserves()
         liquidityPoolBalance()
-
+        getAllowanceA()
+        getAllowanceB()
     }, [isApprovedA, isApprovedB, inputA, inputB, reserve0, reserve1, usdc_balance, 
-    usdt_balance])
+    usdt_balance, allowanceA, allowanceB])
 
-
-    //need to fix this function
     const checkAllowance =  async() => {
-        const getAllowanceA = await usdc_contract.allowance(wallet.address, amm.target)
-        const getAllowanceB = await usdt_contract.allowance(wallet.address, amm.target)
+        const getAllowanceA = await usdc_contract.allowance(signer.address, amm.target)
+        const getAllowanceB = await usdt_contract.allowance(signer.address, amm.target)
 
         if (getAllowanceA >= inputA){
-        
             setApprovedA(true)
         } else {
             setApprovedA(false)
@@ -61,13 +63,20 @@ isSelectedTokenA, selectedTokenA, usdc_balance, usdt_balance}) {
     }
     const approveA = async () => {
         const converted_input_a = Web3.utils.toWei(inputA, 'ether')
-        const approveA = await usdc_contract.approve(amm.target, converted_input_a)
+        // const bigSpend = new BigNumber(5000000000000000000)
+        // console.log(bigSpend.toFixed())
+        const approveA = await usdt_contract.approve(amm.target, converted_input_a)
+        await approveA.wait()
         setApprovedA(true)
+     
     }
 
     const approveB = async () => {
         const converted_input_b = Web3.utils.toWei(inputB, 'ether')
-        const approveB = await usdt_contract.approve(amm.target, converted_input_b)
+        // const bigSpend = new BigNumber(7000000000000000000)
+        // console.log(bigSpend.toFixed())
+        const approveB = await usdc_contract.approve(amm.target, converted_input_b)   
+        await approveB.wait() 
         setApprovedB(true)
     }
 
@@ -87,26 +96,38 @@ isSelectedTokenA, selectedTokenA, usdc_balance, usdt_balance}) {
         const [reserve0, reserve1] = await getReserves()
         const converted_reserve0 = new BigNumber(reserve0).toFixed()
         const converted_reserve1 = new BigNumber(reserve1).toFixed()
+        const check_allowance_a = parseInt(await getAllowanceA())
+        const check_allowance_b = parseInt(await getAllowanceB())
+        const testA = new BigNumber(check_allowance_a).toFixed()
+        const testB = new BigNumber(check_allowance_b).toFixed()
+
         if (reserve0 != 0) {
             const [dx, dy] = await getRatio(converted_reserve0, converted_reserve1)
             const addLiquidity = await amm.addLiquidity(dx, dy)
         } else if (reserve0 == 0){
-            //fix isApproved() states on successful deposit
             const converted_a = Web3.utils.toWei(inputA, 'ether')
             const converted_b = Web3.utils.toWei(inputB, 'ether')
             const bigNumberA = new BigNumber(converted_a)
             const bigNumberB = new BigNumber(converted_b)
             const addLiquidity = await amm.addLiquidity(bigNumberA.toFixed(), bigNumberB.toFixed())
         }
+        usdtBalance()
+        usdcBalance()
     }
 
     const getAllowanceA = async () => {
-        const getAllowanceA = await usdt_contract.allowance(wallet.address, amm.target)
+        const getAllowanceA = await usdt_contract.allowance(signer.address, amm.target)
+        const converted_a = new BigNumber(getAllowanceA).toFixed() / 10 ** 18
+        setUsdtApproval(converted_a)
+        setAllowanceA(converted_a)
         return getAllowanceA
     }
 
     const getAllowanceB = async () => {
-        const getAllowanceB = await usdc_contract.allowance(wallet.address, amm.target)
+        const getAllowanceB = await usdc_contract.allowance(signer.address, amm.target)
+        const converted_b = new BigNumber(getAllowanceB).toFixed() / 10 ** 18
+        setUsdcApproval(converted_b)
+        setAllowanceB(converted_b)
         return getAllowanceB
     }
 
@@ -115,11 +136,9 @@ isSelectedTokenA, selectedTokenA, usdc_balance, usdt_balance}) {
         const convert_reserve0 = new BigNumber(reserve0).toFixed()
         const convert_reserve1 = new BigNumber(reserve1).toFixed()
         const ratio = convert_reserve1 / convert_reserve0
-        console.log(convert_reserve0)
         if (convert_reserve0 != 0){
             setUsdcValue(inputValueA * ratio)
             setInputB(inputValueA * ratio)
-
             const inputValueB = new BigNumber(Web3.utils.toWei(inputValueA * ratio, 'ether'))
             const allowanceB = new BigNumber(await getAllowanceB())
      
@@ -142,12 +161,8 @@ isSelectedTokenA, selectedTokenA, usdc_balance, usdt_balance}) {
         else if (inputValueA.isLessThanOrEqualTo(allowanceA)){
             setApprovedA(true)
         }
-
         setUsdc(event.target.value)
-
     }
-
-    
 
     const handleUsdcChange = async (event) => {
         setInputB(event.target.value)
@@ -162,95 +177,57 @@ isSelectedTokenA, selectedTokenA, usdc_balance, usdt_balance}) {
 
     const resetAllowances = async () => {
         const resetA = await usdc_contract.approve(amm.target, '0')
-        console.log(resetA)
         await new Promise(resolve => setTimeout(resolve, 100)); // Wait for 0.5 seconds
         const resetB = await usdt_contract.approve(amm.target, '0')
-        console.log(resetB)
         setApprovedA(false)
         setApprovedB(false)
     }
-
-    const addLiquidity = async () => {
-        try {   
-            console.log('add liquidity hit')
-            let contractA;
-            let contractB;
-            
-            // if (buttonRefA.current.name == 'usdt') {
-            //     contractA = usdt_contract
-            // } else if (buttonRefA.current.name == 'usdc'){
-            //     contractA = usdc_contract
-            // } else {
-            //     return null
-            // }
-            // if (buttonRefB.current.name == 'usdt') {
-            //     contractB = usdt_contract
-            // } else if (buttonRefB.current.name == 'usdc'){
-            //     contractB = usdc_contract
-            // } else {
-            //     return null
-            // }
-            
-            const reserve0 = await amm.reserve0()
-            const reserve1 = await amm.reserve1()
-            const ratio = 1 / (Number(reserve0) / Number(reserve1))
-            console.log('hit')
-            if (isNaN(ratio)){
-
-                console.log('no existing liquidity, your entry will set ratio')
-                console.log(inputALiq)
-                console.log(inputBLiq)
-                const converted_a = Web3.utils.toWei(inputALiq, 'ether')
-                const converted_b = Web3.utils.toWei(inputBLiq, 'ether')
-                console.log(converted_a)
-                const bigNumberA = new BigNumber(converted_a)
-                const bigNumberB = new BigNumber(converted_b)
-                const addLiquidity = await amm.addLiquidity(bigNumberA.toString(), bigNumberB.toString())
-                console.log('liquidity added')
-                const get_reserve0 = await amm.reserve0()
-                const get_reserve1 = await amm.reserve1()
-                const totalSupply = await amm.totalSupply()
-                setReserve0(Number(get_reserve0)) 
-                setReserve1(Number(get_reserve1))
- 
-                 
-            } else {
-                console.log('add liq else hit')
-                const x = BigNumber(await amm.reserve0()).toNumber()
-                const y = BigNumber(await amm.reserve1()).toNumber()
-                console.log(x, y)
-                const dx = BigNumber(parseInt(inputALiq) * 10 ** 18).toString()
-                console.log(inputALiq)
-                const dy = BigNumber((y * dx) / x).toString()
-                console.log(dx, dy)
-                const addLiquidity = await amm.addLiquidity(dx, dy)
-                
-                // //grab reserve values here and then add them to the state
-                const get_reserve0 = await amm.reserve0()
-                const get_reserve1 = await amm.reserve1()
-                setReserve0(Number(get_reserve0))
-                setReserve1(Number(get_reserve1))
-                // const totalShares = await amm.balanceOf(wallet.address)
-                // console.log(totalShares)
-            }
-            usdcBalance()
-            usdtBalance()
-            liquidityPoolBalance()
-        } catch(error) {     
-            console.log(error)
-        } 
-    } 
         
+    const approve_a = async () => {
+        console.log(usdt_contract, 'usdt contract in approve_a')
+        const a_converted = new BigNumber(2000000000000000000)
+        console.log(a_converted.toFixed(), 'a_converted')
+        const approveA = await usdt_contract.approve(amm.target, a_converted.toFixed())
+
+    }
+    const approve_b = async () => {
+        console.log(usdc_contract, 'usdc_contract in approve_b')
+        const b_converted = new BigNumber(7000000000000000000)
+        console.log(b_converted.toFixed(), 'b_converted')
+        const approveB = await usdc_contract.approve(amm.target, b_converted.toFixed())
+
+    }  
+    const add = async () => {
+        console.log(usdt_contract, 'usdt_contract in add')
+        console.log(usdc_contract, 'usdc_contract in add')
+        const a_converted = new BigNumber(2000000000000000000)
+        const b_converted = new BigNumber(7000000000000000000)
+        // const a_test = new BigNumber(Web3.utils.toWei(10, 'ether'))
+        // const b_test = new BigNumber(Web3.utils.toWei(18, 'ether'))
+        // console.log(a_test.toString())
+        // console.log(b_test.toString())
+        //try deploying the contract with flipping around the usdc/usdt arguments
+        //yea that's probably it, see the constructor code
+        // constructor(address _token0, address _token1) {
+        //     token0 = IERC20(_token0);
+        //     token1 = IERC20(_token1);
+        // }
+        //token 0 == usdc token 1 == usdt
+        //have to either flip around deployment or flip around the html input
+        const addLiquidity = await amm.addLiquidity(a_converted.toFixed(), b_converted.toFixed(), 
+        )
+        console.log(addLiquidity)
+    }
+
     return (
         <div className='add-liquidity'>
-            <p>{reserve_0}</p>
-            <p>{reserve_1}</p>
+            {/* <p>reserve 0: {reserve_0 / 10 ** 18}</p>
+            <p>reserve 1: {reserve_1 / 10 ** 18}</p> */}
             <div className='selected-token-a'>
                 <div className='btn-div'>
                     <button>
                         <img src={usdtImage}></img>
                         <p>USDT</p>
-                        {/* <span className="icon">&#9660;</span> */}
                     </button>
                 </div> 
                 <div className='selected-token-a-input'>
@@ -263,7 +240,6 @@ isSelectedTokenA, selectedTokenA, usdc_balance, usdt_balance}) {
                     <button>
                         <img src={usdcImage}></img>
                         <p>USDC</p>
-                        {/* <span className="icon">&#9660;</span> */}
                     </button>
                 </div>
                 <div className='selected-token-b-input'>
@@ -272,9 +248,10 @@ isSelectedTokenA, selectedTokenA, usdc_balance, usdt_balance}) {
                 </div> 
             </div>
             <div>
-                <button onClick={resetAllowances}>reset allowances</button>
+                {/* <button onClick={resetAllowances}>reset allowances</button>
+                <p>allowance A: {allowanceA}</p>
+                <p>allowance B: {allowanceB}</p> */}
             </div>
-
             <div className='add-liquidity-approval-buttons'>
                 {isApprovedA ? (
                     null
@@ -291,13 +268,12 @@ isSelectedTokenA, selectedTokenA, usdc_balance, usdt_balance}) {
                     <button onClick={addLiquidity1}>Add Liquidity</button>
                 )}
             </div>
-       
-            {/* <button onClick={resetAllowances}>reset allowances</button> */}
-            {/* <button onClick={checkAllowance}>check allowance</button> */}
-     
+            {/* <button onClick={approve_a}>approve_a</button>
+            <button onClick={approve_b}>approve_b</button>
+            <button onClick={add}>add liq</button> */}
+
         </div>
     )
-
 } 
 
 export default App;

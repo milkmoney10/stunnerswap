@@ -8,27 +8,26 @@ function App({reserve0, setReserve0, reserve1, setReserve1, amm, usdcBalance, us
     buttonRefA, usdc_contract, usdt_contract, buttonRefB, setInputBLiq, inputBLiq, 
 isApprovedA, approvalAmount, setApprovalAmount, setCurrentAllowance, 
 inputValueA, setSelectedTokenA, selectedTokenA, swapApprovalAmount, setSwapApprovalAmount, 
-isApproved, setApprovedA}) {
-
-    useEffect(() => {
-    }, [selectedTokenA])
-
+isApproved, setApprovedA, signer}) {
+ 
+    useEffect(() => { 
+    }, [selectedTokenA, signer, isApprovedA])
+  
     const approve = async () => {
         const approvalAmountBigNumber = new BigNumber(inputValueA * 10 ** 18)
-        console.log(approvalAmountBigNumber)
         const approvalAmount = inputValueA
         let contract = (selectedTokenA == 'usdt') ? usdt_contract : (selectedTokenA == 'usdc') ? usdc_contract : null;
         if (contract !== null) {
          
             const approve = await contract.approve(amm.target, approvalAmountBigNumber.toFixed())
-            const allowanceAmount = await contract.allowance(wallet.address, amm.target)
+            await approve.wait()
+            const allowanceAmount = await contract.allowance(signer.address, amm.target)
             const allowanceAmountBigNumber = new BigNumber(allowanceAmount).toFixed()
             const allowanceConverted = allowanceAmountBigNumber / 10 ** 18
-            console.log(`approved ${allowanceConverted} of ${selectedTokenA}`)
             setApprovedA(true)
         } if (contract == null){
-            return null
-        }
+            return null 
+        }  
  
 }
 
@@ -52,8 +51,8 @@ isApproved, setApprovedA}) {
     return(
         <div className='swap-approval-container'> 
             <button onClick={approve}>Approve</button>
-            <button onClick={resetAllowances}>Reset Allowances</button>
-            <p>Input A approved: {swapApprovalAmount}</p>
+            {/* <button onClick={resetAllowances}>Reset Allowances</button>
+            <p>Input A approved: {swapApprovalAmount}</p> */}
             </div>
     )
 }

@@ -7,7 +7,7 @@ function App({reserve0, setReserve0, reserve1, setReserve1, amm, usdcBalance, us
     liquidityPoolBalance, usdcLiq, usdtLiq, wallet, inputALiq, 
     buttonRefA, usdc_contract, usdt_contract, buttonRefB, setInputBLiq, inputBLiq, 
 isApprovedA, setApprovedA, approvalAmount, setApprovalAmount, setCurrentAllowance, 
-currentAllowance }) {
+currentAllowance, signer }) {
  
     useEffect(() => {
 
@@ -18,8 +18,8 @@ currentAllowance }) {
 
     const approvalInput = new BigNumber(100000000000000000000)
     const checkAllowance =  async() => {
-        const getAllowanceA = await usdc_contract.allowance(wallet.address, amm.target)
-        const getAllowanceB = await usdt_contract.allowance(wallet.address, amm.target)
+        const getAllowanceA = await usdc_contract.allowance(signer.address, amm.target)
+        const getAllowanceB = await usdt_contract.allowance(signer.address, amm.target)
         console.log(getAllowanceA)
         console.log(getAllowanceB)
         if (getAllowanceA >= approvalInput){
@@ -32,7 +32,7 @@ currentAllowance }) {
      
             setApprovedB(true)
         } else {
-            setApprovedB(false)
+            setApprovedB(false) 
         }
    
     }
@@ -41,7 +41,7 @@ currentAllowance }) {
         const approveA = await usdc_contract.approve(amm.target, approvalAmount.toString())
         setApprovedA(true)
         await new Promise(resolve => setTimeout(resolve, 200)); // Wait for 0.5 seconds
-        const allowanceAmount = await usdc_contract.allowance(wallet.address, amm.target)
+        const allowanceAmount = await usdc_contract.allowance(signer.address, amm.target)
         const convertAllowanceAmount = new BigNumber(allowanceAmount).toString()
         setCurrentAllowance(convertAllowanceAmount)
         setApprovalAmount(convertAllowanceAmount)
